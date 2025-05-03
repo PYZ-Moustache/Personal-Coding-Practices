@@ -1,0 +1,14 @@
+# Project # 1 Bank Savings Calculator 
+# Yizhen Pan 
+# 2023.6.21
+
+interest_rate = float(input("Please enter the interest rate from your bank or credit union as a percentage (examples 0.75 or 1.0):"))
+deposit = float(input("Enter you deposited into savings as dollars and cents (ex 199.99):"))
+months = int(input("How many months will you hold your savings?:"))
+future_value = deposit * (1 + interest_rate / 100) ** (months / 12)
+print(f"Your ${deposit:.2f} will be worth ${future_value:.2f} in {months} months")
+
+# rounded UP
+import math
+future_value = math.ceil(future_value * 100) / 100
+print(f"** rounded UP** Your ${deposit:.2f} will be worth ${future_value:.2f} in {months} months")
