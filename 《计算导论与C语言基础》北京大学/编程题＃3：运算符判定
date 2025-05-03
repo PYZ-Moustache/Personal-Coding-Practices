@@ -1,0 +1,17 @@
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int main()
+{
+    char comma = { ',' };
+    int a, b, c;
+    cin >> a >> comma >> b >> comma >> c;
+    if (a + b == c) cout << "+" << endl;
+    else if (a - b == c) cout << "-" << endl;
+    else if (a * b == c) cout << "*" << endl;
+    else if (a / b == c) cout << "/" << endl;
+    else if (a % b == c) cout << "%" << endl;
+    else cout << "error" << endl;
+}
