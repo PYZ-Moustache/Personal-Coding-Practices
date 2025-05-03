@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int main()
+{
+    int count1[26] = { 0 };
+    char a[1000];
+    cin.getline(a, 1000);
+    int length = strlen(a);
+    for (int i = 0; i < length; ++i){
+        if (a[i] >= 65 && a[i] <= 90) // 大写字母
+            count1[a[i] - 65]++;
+        else if (a[i] >= 97 && a[i] <= 122){ //小写转大写
+            count1[a[i] - 97]++;
+            a[i] -= 32;
+        }
+    }
+    int firstMax = 0, secondMax = 0;
+    for (int i = 0; i < 26; ++i){
+        if (count1[firstMax] <= count1[i]) //最大
+            firstMax = i;
+    }
+    for (int i = 0; i < 26; ++i){
+        if (count1[i] == count1[firstMax]) //最大=0
+            count1[i] = 0;
+    }
+    for (int i = 0; i < 26; ++i){
+        if (count1[secondMax] <= count1[i]) //最大（即第二大）
+            secondMax = i;
+    }
+    int num = count1[secondMax];
+    for (int i = 0; i < 26; ++i){
+        if (count1[i] == count1[secondMax]) //第二大=500
+            count1[i] = 500;
+    }
+    for (int i = 0; i < length; ++i){
+        if (count1[a[i] - 65] == 500){ //第一个第二大
+            cout << char(a[i]) << "+" << char(a[i] + 32) << ":" << num;
+            break;
+        }
+    }
+    return 0;
+}
