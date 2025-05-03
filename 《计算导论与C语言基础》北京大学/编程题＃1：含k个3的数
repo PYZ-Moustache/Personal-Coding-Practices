@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int m, k, i = 0;
+	cin >> m >> k;
+	if (m % 19 == 0) {
+		int n3 = 0;
+		if (m - m % 10000 == 30000) n3++;
+		m = m % 10000;
+		if (m - m % 1000 == 3000) n3++;
+		m = m % 1000;
+		if (m - m % 100 == 300) n3++;
+		m = m % 100;
+		if (m - m % 10 == 30) n3++;
+		m = m % 10;
+		if (m == 3) n3++;
+		if (n3 == k) i = 1;
+	}
+	if (i == 1) cout << "YES" << endl;
+	else if (i == 0) cout << "NO" << endl;
+}
