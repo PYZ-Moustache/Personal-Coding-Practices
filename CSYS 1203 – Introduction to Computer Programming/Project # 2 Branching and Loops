@@ -1,0 +1,81 @@
+# Project # 2 Branching and Loops
+# Yizhen Pan
+# 2023.7.17
+
+# Use a while loop to allow the user to continue running the program until ready to exit
+while True:
+    
+    # Ask for THREE financial institution names, and three interest rates
+    institution1 = input("Please enter the name of the first financial institution: ")
+    rate1 = float(input(f"Please enter the interest rate from {institution1} as a percentage (examples 0.75 or 1.0): "))
+    institution2 = input("Please enter the name of the second financial institution: ")
+    rate2 = float(input(f"Please enter the interest rate from {institution2} as a percentage (examples 0.75 or 1.0): "))
+    institution3 = input("Please enter the name of the third financial institution: ")
+    rate3 = float(input(f"Please enter the interest rate from {institution3} as a percentage (examples 0.75 or 1.0): "))
+    
+    deposit = float(input("Enter you deposited into savings as dollars and cents (ex 199.99): "))
+    months = int(input("How many months will you hold your savings?: "))
+
+    # Use branching to allow our user to compare their savings between THREE financial institutions
+    if rate1 > rate2 and rate1 > rate3:
+        max_institution = institution1
+        max_rate = rate1
+        if rate2 > rate3:
+            mid_institution = institution2
+            mid_rate = rate2            
+            min_institution = institution3
+            min_rate = rate3
+        else:
+            mid_institution = institution3
+            mid_rate = rate3            
+            min_institution = institution2
+            min_rate = rate2
+            
+    elif rate2 > rate1 and rate2 > rate3:
+        max_institution = institution2
+        max_rate = rate2
+        if rate1 > rate3:
+            mid_institution = institution1
+            mid_rate = rate1            
+            min_institution = institution3
+            min_rate = rate3
+        else:
+            mid_institution = institution3
+            mid_rate = rate3            
+            min_institution = institution1
+            min_rate = rate1
+            
+    else:
+        max_institution = institution3
+        max_rate = rate3
+        if rate1 > rate2:
+            mid_institution = institution1
+            mid_rate = rate1
+            min_institution = institution2
+            min_rate = rate2
+        else:
+            mid_institution = institution2
+            mid_rate = rate2
+            min_institution = institution1
+            min_rate = rate1
+            
+    future_value_max = deposit * (1 + max_rate / 100) ** (months / 12)
+    future_value_mid = deposit * (1 + mid_rate / 100) ** (months / 12)
+    future_value_min = deposit * (1 + min_rate / 100) ** (months / 12)
+    
+    # Round UP
+    import math
+    future_value_max = math.ceil(future_value_max * 100) / 100
+    future_value_mid = math.ceil(future_value_mid * 100) / 100
+    future_value_min = math.ceil(future_value_min * 100) / 100
+    
+    print("*" * 80)
+    print(f"Your ${deposit:.2f} will be worth the highest amount of ${future_value_max:.2f} in {months} months at {max_institution}.")
+    print(f"Your ${deposit:.2f} will be worth the second highest amount of ${future_value_mid:.2f} in {months} months at {mid_institution}.")
+    print(f"Your ${deposit:.2f} will be worth the lowest amount of ${future_value_min:.2f} in {months} months at {min_institution}.")
+    print("*" * 80)
+    
+    # Allow the user to continue using your tool until ready to exit
+    exist = input("Do you want to calculate again (yes/no)?: ")
+    if exist.lower() == "no":
+        break
