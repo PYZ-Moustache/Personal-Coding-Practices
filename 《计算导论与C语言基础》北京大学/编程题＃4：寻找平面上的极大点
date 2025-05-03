@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int main()
+{
+    int n, p[100][2] = { 0 }, a[100] = { 0 }, count = 0, COUNT = 0;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> p[i][0] >> p[i][1];
+//        cout << "(" << p[i][0] << "," << p[i][1] << ")";
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i != j && (p[i][0] <= p[j][0] && p[i][1] <= p[j][1])) {
+                a[i] = 1;
+                count++;
+//                cout << "count=" << count << endl;
+                break;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (a[i] != 1) {
+            for (int j = i + 1; j < n; j++) {
+                if (a[j] != 1) {
+                    if (p[j][0] < p[i][0]) {
+                        int temp[2] = { p[j][0],p[j][1] };
+                        p[j][0] = p[i][0]; p[j][1] = p[i][1];
+                        p[i][0] = temp[0]; p[i][1] = temp[1];
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+//        cout << "i=" << i << "a[i]=" << a[i] << endl;
+        if (a[i] != 1) {
+//            cout << "i=" << i << endl;
+            cout << "(" << p[i][0] << "," << p[i][1] << ")";
+            if (COUNT < count)
+                cout << ",";
+            COUNT++;
+//            cout << "COUNT=" << COUNT << endl;
+        }
+    }
+}
