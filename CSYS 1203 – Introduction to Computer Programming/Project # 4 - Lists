@@ -1,0 +1,30 @@
+# Project # 4 - Lists
+# Yizhen Pan
+# 2023.7.30
+
+def add_player(roster):
+    player_name = input("Please Type a Player to Add: ")
+    roster.append(player_name)
+
+def display_roster(roster):
+    print("Current Team Roster:")
+    for num, player in enumerate(roster, 1):
+        print(f"Player {num} is {player}")
+
+print("Welcome to the Team Roster Program. Please Use the Following Menu to Navigate.")
+print("(1) Add a Player to the Roster")
+print("(2) Display the Current Roster")
+print("(3) Exit")
+roster = []
+    
+while True:
+    choice = input()
+    if choice == '1':
+        add_player(roster)
+    elif choice == '2':
+        display_roster(roster)
+    elif choice == '3':
+        print("Thank you for Using the Roster Program Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
