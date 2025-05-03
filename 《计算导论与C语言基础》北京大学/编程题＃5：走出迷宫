@@ -1,0 +1,68 @@
+#include<iostream>
+using namespace std;
+
+int map[102][102], minimum;
+
+void maze(int x, int y, int lastStep, int count) // lastStep：上1，下2，左3，右4
+{
+    if (map[x][y] == 3) {
+        if (minimum > count) minimum = count;
+        //                cout << count << " ";
+    }
+    if (map[x][y] != 1) count++;
+    if (map[x][y] == 0 && lastStep != 1 && count <= minimum) {
+        //        count++;
+        //        cout << count << "-下 ";
+        maze(x, y - 1, 2, count); // 上一步不是上，则这一步下
+    }
+    if (map[x][y] == 0 && lastStep != 2 && count <= minimum) {
+        //        count++;
+        //        cout << count << "-上 ";
+        maze(x, y + 1, 1, count); // 上一步不是下，则这一步上
+    }
+    if (map[x][y] == 0 && lastStep != 3 && count <= minimum) {
+        //        count++;
+        //        cout << count << "-右 ";
+        maze(x + 1, y, 4, count); // 上一步不是左，则这一步右
+    }
+    if (map[x][y] == 0 && lastStep != 4 && count <= minimum) {
+        //        count++;
+        //        cout << count << "-左 ";
+        maze(x - 1, y, 3, count); // 上一步不是右，则这一步左
+    }
+}
+
+int main()
+{
+    for (int i = 0; i < 102; i++) {
+        for (int j = 0; j < 102; j++) map[i][j] = 1;
+    }
+    //    for (int i = 0; i < 10000; i++) minimum[i] = 10000;
+
+    int n, m, start[2];
+    cin >> n >> m; // n为行数，m为列数
+    for (int i = 1; i < n + 1; i++) {
+        for (int j = 1; j < m + 1; j++) {
+            char putIn;
+            cin >> putIn;
+            if (putIn == '.') map[i][j] = 0; // 0为空地
+            else if (putIn == '#') map[i][j] = 1; // 1为墙
+            else if (putIn == 'S') {
+                start[0] = i; start[1] = j;
+                map[i][j] = 0; // 起点也标为0
+            }
+            else if (putIn == 'T') map[i][j] = 3; // 3为终点
+        }
+    }
+    //    for (int i = 0; i < n + 2; i++) {
+    //        for (int j = 0; j < m + 2; j++) cout << map[i][j] << " ";
+    //        cout << endl;
+    //    }
+    minimum = 10000;
+    maze(start[0], start[1], 0, 0);
+    //    int min = 10000;
+    //    for (int i = 0; i < 10000; i++) {
+    //        if (minimum[i] < min) min = minimum[i];
+    //    }
+    cout << minimum << endl;
+}
