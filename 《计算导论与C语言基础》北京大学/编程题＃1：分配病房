@@ -1,0 +1,37 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    int m, k = 0;
+    float a, p[50][2] = { 0 }, pa[50][2] = { 0 };
+    cin >> m >> a;
+    cout << m << " " << a << endl;
+    for (int i = 0; i < m; i++) {
+        cin >> p[i][0] >> p[i][1];
+        //        cout << p[i][0] << " " << p[i][1] << endl;
+        if (p[i][1] >= a) {
+            pa[k][0] = p[i][0]; pa[k][1] = p[i][1];
+            //            cout << pa[k][0] << " " << pa[k][1] << endl;
+            k++;
+        }
+    }
+    if (k == 0) cout << "None." << endl;
+    else {
+        for (int j1 = 0; j1 < k - 1; j1++) {
+            for (int j2 = j1 + 1; j2 < k; j2++) {
+                if (pa[j2][1] > pa[j1][1]) {
+                    float temp1 = pa[j1][1]; float temp0 = pa[j1][0];
+                    pa[j1][1] = pa[j2][1]; pa[j1][0] = pa[j2][0];
+                    pa[j2][1] = temp1; pa[j2][0] = temp0;
+                }
+            }
+        }
+        for (int j = 0; j < k; j++) {
+            if (pa[j][0] < 100) cout << "0";
+            if (pa[j][0] < 10) cout << "0";
+            cout << fixed << setprecision(0) << pa[j][0] << " " << fixed << setprecision(1) << pa[j][1] << endl;
+        }
+    }
+}
