@@ -1,0 +1,59 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from scipy.stats import linregress
+
+# 实验数据
+concentration = [0.00, 0.02, 0.04, 0.12, 0.2, 0.4, 0.6]  # 磷溶液的浓度
+measurement = [0.000, 0.010, 0.015, 0.056, 0.093, 0.181, 0.277]  # 对应的测定值
+
+# 拟合函数
+def linear_func(x, a, b):
+    return a + b * x
+
+# 曲线拟合
+popt, pcov = curve_fit(linear_func, concentration, measurement)
+a_fit, b_fit = popt # 拟合参数
+
+# 曲线x,y值
+x_fit = np.linspace(0, 0.65, 100)
+y_fit = linear_func(x_fit, a_fit, b_fit)
+
+# 计算相关系数和线性度
+slope, intercept, r_value, p_value, std_err = linregress(concentration, measurement)
+residuals = np.array(measurement) - linear_func(np.array(concentration), a_fit, b_fit)
+residual_sum_sq = np.sum(residuals**2)
+pearson_r = r_value
+r_squared = r_value**2
+adjusted_r_squared = 1 - (1 - r_squared) * (len(concentration) - 1) / (len(concentration) - 2)
+
+# 绘制原始数据&拟合曲线
+plt.figure(figsize=(8, 6))
+plt.scatter(concentration, measurement, label='Original Data')
+plt.plot(x_fit, y_fit, 'r-', label='Fit Curve')
+plt.xlabel('Concentration')
+plt.ylabel('Measurement')
+plt.legend()
+
+# 输出拟合函数和统计指标
+fit_equation = f'Fit Equation: y = {a_fit:.5e} + {b_fit:.5}x'
+intercept_std_err = std_err * np.sqrt(np.sum(concentration)**2 / len(concentration))
+slope_std_err = std_err * np.sqrt(1 / len(concentration))
+intercept_text = f'Intercept: {a_fit:.5e} ± {intercept_std_err:.5e}'
+slope_text = f'Slope: {b_fit:.5e} ± {slope_std_err:.5e}'
+residual_sum_sq_text = f'Residual Sum of Squares: {residual_sum_sq:.5e}'
+pearson_r_text = f'Pearson\'s R: {pearson_r:.5}'
+r_squared_text = f'R^2 (COD): {r_squared:.5}'
+adjusted_r_squared_text = f'Adjusted R^2: {adjusted_r_squared:.5}'
+
+plt.text(0, 0.475, fit_equation, fontsize=10)
+plt.text(0, 0.45, intercept_text, fontsize=10)
+plt.text(0, 0.425, slope_text, fontsize=10)
+plt.text(0, 0.4, residual_sum_sq_text, fontsize=10)
+plt.text(0, 0.375, pearson_r_text, fontsize=10)
+plt.text(0, 0.35, r_squared_text, fontsize=10)
+plt.text(0, 0.325, adjusted_r_squared_text, fontsize=10)
+
+plt.subplots_adjust(left=0, bottom=0, right=1, top=0.8)
+
+plt.show()
