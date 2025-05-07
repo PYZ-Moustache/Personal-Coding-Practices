@@ -1,0 +1,43 @@
+from PIL import Image, ImageDraw
+import random
+
+# 打开图片
+image = Image.open("your_image.jpg")
+
+# 获取图片的宽度和高度
+width, height = image.size
+
+# 创建ImageDraw对象
+draw = ImageDraw.Draw(image)
+
+# 定义允许生成随机点的边界范围
+margin = 0  # 边距，防止点靠近边缘
+x_min = margin
+x_max = width - margin
+y_min = margin
+y_max = height - margin
+
+# 随机生成点的坐标
+x = random.randint(x_min, x_max)
+y = random.randint(y_min, y_max)
+
+# 定义要截取的区域大小
+crop_size = 200  # 截取的区域大小为 100x100 像素
+
+# 计算截取区域的左上角和右下角坐标
+left = max(0, x - crop_size // 2)
+upper = max(0, y - crop_size // 2)
+right = min(width, x + crop_size // 2)
+lower = min(height, y + crop_size // 2)
+
+# 在随机位置画一个点
+draw.point((x, y), fill=(255, 0, 0))  # 这里fill参数是点的颜色，这里是红色
+
+# 截取指定区域的图片
+cropped_image = image.crop((left, upper, right, lower))
+
+# 保存截取的图片
+cropped_image.save("cropped_image.jpg")
+
+# 显示截取的图片
+cropped_image.show()
